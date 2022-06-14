@@ -1,6 +1,6 @@
 import React from 'react';
 import '../App.scss';
-import Drawing from '../drawing.svg';
+import Drawing from '../drawing.png';
 
 const Home = () => {
     return (
