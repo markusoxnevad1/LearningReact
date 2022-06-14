@@ -4,7 +4,11 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Layout from './pages/Layout';
 import Contact from './pages/Contact';
+<<<<<<< HEAD
 import Garage from './LearningReact';
+=======
+import Garage from './Car';
+>>>>>>> e1852e19cda7a7e2c2a5552457fc087ffcd47846
 
 function App() {
     return (
