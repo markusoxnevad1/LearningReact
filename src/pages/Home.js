@@ -1,9 +1,16 @@
 import React from 'react';
 import '../App.scss';
+import Drawing from '../drawing.svg';
 
 const Home = () => {
-    return <h1 className="backgroundstyling">Home</h1>;
-  };
+    return (
+    <>
+        <h1 className="backgroundstyling">Home</h1>;
+        <div className="App">
+            <img src={Drawing} alt="React Logo" />
+        </div>
+    </>
+  )};
   
   export default Home;
   

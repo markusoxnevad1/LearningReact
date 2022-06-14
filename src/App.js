@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Layout from './pages/Layout';
 import Contact from './pages/Contact';
-import Garage from './Car';
+import Garage from './LearningReact';
 
 function App() {
     return (

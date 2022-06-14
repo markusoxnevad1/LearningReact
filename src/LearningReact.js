@@ -1,6 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Todos from './Todos';
+import './App.scss';
 
 class Car extends React.Component {
     constructor(props) {
@@ -46,8 +47,8 @@ class Car extends React.Component {
         }
       return (
           <div>
-                <h1>My {this.state.brand}</h1>
-                <h1>My Favorite Color is {this.state.favoritecolor}</h1>
+                <h2>My {this.state.brand}</h2>
+                <h2>My Favorite Color is {this.state.favoritecolor}</h2>
                 <p>
                     It is a {this.state.color} not favorite color {this.state.favoritecolor}, {this.state.model} from {this.state.year}.
                 </p>
@@ -68,12 +69,12 @@ class Car extends React.Component {
   }
 
 class Child extends React.Component {
-    componentWillUnmount() {
-        alert("The component named Car is about to be unmounted.")
-    }
+    // componentWillUnmount() {
+    //     alert("The component named Car is about to be unmounted.")
+    // }
     render() {
         return (
-            <h1>Hello World!</h1>
+            <h2>Hello World!</h2>
         )
     }
 }
@@ -91,11 +92,11 @@ function GarageInfo() {
     ];
     return (
         <>
-            <h1>Who lives in my garage?</h1>
+            <h2>Who lives in my garage?</h2>
             <ul>
                 {cars.map((car) => <AllCars key={car.id} brand={car.brand} />)}
             </ul>
-            <h1>Garage</h1>
+            <h2>Garage</h2>
                 { cars.length > 0 &&
                     <h2>
                         You have {cars.length} cars in your garage.
@@ -205,7 +206,7 @@ const FavoriteColor = () => {
 
     return (
         <>
-            <h1>My favorite color is {color}!</h1>
+            <h2>My favorite color is {color}!</h2>
             <button type="Button" onClick={() => setColor("blue")}>Blue</button>
             <button type="Button" onClick={() => setColor("red")}>Red</button>
             <button type="Button" onClick={() => setColor("white")}>White</button>
@@ -214,18 +215,65 @@ const FavoriteColor = () => {
     )
 }
 
+const CarInformation = () =>  {
+    const [car, setCar] = useState({
+        brand: "Suzuki",
+        model: "Swift",
+        year: "2012",
+        color: "white"
+    })
+
+    const updateColor = () => {
+        setCar(previousState => {
+            return { ...previousState, color: "black" }
+        });
+    }
+
+    return (
+        <>
+         <h2>My {car.brand}</h2>
+         <p>
+             It is a {car.color} {car.model} from {car.year}.
+         </p>
+         <button type="button" onClick={updateColor}>Black</button>
+        </>
+    )
+}
+
+const Timer = () => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setCount((count) => count + 1);
+        }, 1000);
+    });
+
+    return <h2>I've rendered {count} times!</h2>
+};
+
 class Garage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Who lives in my garage?</h1>
+                <hr />
+                <h1>React Components</h1>
                 <Car />
                 <GarageInfo />
+                <hr />
+                <h1>React Forms</h1>
                 <MyForm />
                 <MyFormTextarea />
+                <hr />
                 <MyFormDropdown />
+                <hr />
+                <h1>React Memo</h1>
                 <AppTodo />
+                <hr />
+                <h1>React Hooks</h1>
                 <FavoriteColor />
+                <CarInformation />
+                <Timer />
             </div>
         )
     }
