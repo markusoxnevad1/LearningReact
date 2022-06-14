@@ -1,26 +1,26 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import Nav from 'react-bootstrap/Nav';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const Layout = () => {
     return (
         <>
-        <Nav>
-            <ul>
+        <Navbar className="navbar navbar-expand-lg navbar-light bg-light" variant="dark">
+            <ul class="nav nav-tabs">
                 <li>
-                    <Link to="/">Home</Link>
+                    <Nav.Link href="/">Home</Nav.Link>
                 </li>
                 <li>
-                    <Link to="/about">About</Link>
+                    <Nav.Link href="/about">About</Nav.Link>
                 </li>
                 <li>
-                    <Link to="/learningreact">Learning React</Link>
+                    <Nav.Link href="/learningreact">Learning React</Nav.Link>
                 </li>
                 <li>
-                    <Link to="/contact">Contact</Link>
+                    <Nav.Link href="/contact">Contact</Nav.Link>
                 </li>
             </ul>
-        </Nav>
+        </Navbar> 
 
         <Outlet />
         </>

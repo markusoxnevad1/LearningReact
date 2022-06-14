@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { createContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import Todos from './Todos';
 import './App.scss';
 
@@ -244,13 +244,87 @@ const Timer = () => {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        setTimeout(() => {
-            setCount((count) => count + 1);
-        }, 1000);
-    });
+        let timer = setTimeout(() => {
+        setCount((count) => count + 1);
+    }, 1000);
+
+    return () => clearTimeout(timer)
+    }, []);
+
 
     return <h2>I've rendered {count} times!</h2>
 };
+
+function Counter() {
+    const [count, setCount] = useState(1);
+    const [calculation, setCalculation] = useState(2);
+
+    useEffect(() => {
+        setCalculation(() => count * 2)
+    }, [count]);
+
+    return (
+        <>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount((c) => c * 2 )}>+</button>
+            <p>Calculation: {calculation}</p>
+        </>
+    );
+};
+
+const UserContext = createContext()
+
+function Component1() {
+    const [user, setUser] = useState("Markus Øxnevad");
+
+    return (
+        <UserContext.Provider value={user}>
+            <h2>{`Hello ${user}!`}</h2>
+            <Component2 user={user} />
+        </UserContext.Provider>
+    )
+}
+
+function Component2({user}) {
+    return (
+        <>
+            <h2>Component 2</h2>
+            <Component3 user={user}/>
+        </>
+    )
+}
+
+function Component3({user}) {
+    return (
+        <>
+            <h2>Component 3</h2>
+            <Component4 user={user}/>
+        </>
+    )
+}
+
+function Component4({user}) {
+    return (
+        <>
+            <h2>Component 4</h2>
+            <Component5 user={user}/>
+        </>
+    )
+}
+function Component5() {
+    const user = useContext(UserContext);
+    return (
+        <>
+            <h2>Component 5</h2>
+            <h3>{`Hello ${user} again!`}</h3>
+        </>
+    )
+}
+
+function HooksUseRef() {
+
+}
+
 
 class Garage extends React.Component {
     render() {
@@ -271,12 +345,19 @@ class Garage extends React.Component {
                 <AppTodo />
                 <hr />
                 <h1>React Hooks</h1>
+                <h3 className="subcategory">useState</h3>
                 <FavoriteColor />
                 <CarInformation />
+                <h3 className="subcategory">useEffect</h3>
                 <Timer />
+                <Counter />
+                <h3 className="subcategory">useContext</h3>
+                <Component1 />
             </div>
         )
     }
 }
+
+
 
 export default Garage;
