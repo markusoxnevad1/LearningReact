@@ -6,7 +6,7 @@ const Layout = () => {
     return (
         <>
         <Navbar className="navbar navbar-expand-lg navbar-light bg-light" variant="dark">
-            <ul class="nav nav-tabs">
+            <ul className="nav nav-tabs">
                 <li>
                     <Nav.Link href="/">Home</Nav.Link>
                 </li>

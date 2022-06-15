@@ -1,7 +1,8 @@
-import React, { createContext } from "react";
-import { useState, useEffect, useContext, useRef } from "react";
+import React, { createContext, useCallback } from "react";
+import { useState, useEffect, useContext, useRef, useReducer } from "react";
 import Todos from './Todos';
 import './App.scss';
+import { ListGroup, Card } from 'react-bootstrap';
 
 class Car extends React.Component {
     constructor(props) {
@@ -183,16 +184,19 @@ function MyFormDropdown() {
 
 const AppTodo = () => {
     const [count, setCount] = useState(0);
-    const [todos, setTodos] = useState(["todo 1", "todo 2"]);
+    const [todos, setTodos] = useState([]);
 
     const increment = () => {
         setCount((c) => c + 1);
     };
 
+    const addTodo = useCallback(() => {
+        setTodos((t) => [...t, "New Todo"]);
+    }, [todos]);
+
     return (
         <>
-            <Todos todos={todos} />
-            <hr />
+            <Todos todos={todos} addTodo={addTodo} />
             <div>
                 Count: {count}
                 <button onClick={increment}>+</button>
@@ -322,7 +326,77 @@ function Component5() {
 }
 
 function HooksUseRef() {
+    const [inputValue, setInputValue] = useState("");
+    const previousInputValue = useRef("");
 
+    useEffect(() => {
+        previousInputValue.current = inputValue;
+    }, [inputValue]);
+
+    return (
+        <>
+            <input 
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+            />
+            <h2>Current Value: {inputValue}</h2>
+            <h2>Previous Value: {previousInputValue.current}</h2>    
+            </>
+    )
+}
+
+const initialTodos = [
+    {
+        id: 1,
+        title: "Todo 1",
+        complete: false
+    },
+    {
+        id: 2,
+        title: "Todo 2",
+        complete: false
+    }
+];
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "COMPLETE":
+            return state.map((todo) => {
+                if (todo.id === action.id) {
+                    return {...todo, complete: !todo.complete };
+                } else {
+                    return todo;
+                }
+            });
+        default:
+            return state;
+    }   
+}
+
+function UseReducerTodos() {
+    const [todos, dispatch] = useReducer(reducer, initialTodos);
+
+    const handleComplete = (todo) => {
+        dispatch({ type: "COMPLETE", id: todo.id});
+    };
+
+    return (
+        <>
+            {todos.map((todo) => (
+                <div key={todo.id}>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={todo.complete}
+                            onChange={() => handleComplete(todo)}
+                        />
+                        {todo.title}
+                    </label>
+                </div>
+            ))}
+        </>
+    )
 }
 
 
@@ -330,30 +404,68 @@ class Garage extends React.Component {
     render() {
         return (
             <div>
-                <hr />
                 <h1>React Components</h1>
-                <Car />
-                <GarageInfo />
-                <hr />
+                <Card>
+                    <Card.Body>
+                        <Car />
+                        <GarageInfo />
+                    </Card.Body>
+                </Card>
                 <h1>React Forms</h1>
-                <MyForm />
-                <MyFormTextarea />
-                <hr />
-                <MyFormDropdown />
-                <hr />
+                <Card>
+                    <Card.Body>
+                        <MyForm />
+                        <MyFormTextarea />
+                        <MyFormDropdown />
+                    </Card.Body>
+                </Card>
                 <h1>React Memo</h1>
-                <AppTodo />
-                <hr />
+                <Card>
+                    <Card.Body>
+                    <AppTodo />
+                    </Card.Body>
+                </Card>
                 <h1>React Hooks</h1>
-                <h3 className="subcategory">useState</h3>
-                <FavoriteColor />
-                <CarInformation />
-                <h3 className="subcategory">useEffect</h3>
-                <Timer />
-                <Counter />
-                <h3 className="subcategory">useContext</h3>
-                <Component1 />
+                <Card>
+                    <Card.Header><h3>useState</h3></Card.Header>
+                    <Card.Body>
+                        <FavoriteColor />
+                        <CarInformation />
+                    </Card.Body>
+                </Card>
+                <Card>
+                    <Card.Header><h3>useEffect</h3></Card.Header>
+                    <Card.Body>
+                        <Timer />
+                        <Counter />
+                    </Card.Body>
+                </Card>
+                <Card>
+                    <Card.Header><h3>useContext</h3></Card.Header>
+                    <Card.Body>
+                        <Component1 />
+                    </Card.Body>
+                </Card>
+                <Card>
+                    <Card.Header><h3>useRef</h3></Card.Header>
+                    <Card.Body>
+                        <HooksUseRef />
+                    </Card.Body>
+                </Card>
+                <Card>
+                    <Card.Header><h3>useReducer</h3></Card.Header>
+                    <Card.Body>
+                        <UseReducerTodos />
+                    </Card.Body>
+                </Card>
+                <Card>
+                    <Card.Header><h3>useCallback</h3></Card.Header>
+                    <Card.Body>
+                        <AppTodo />
+                    </Card.Body>
+                </Card>
             </div>
+
         )
     }
 }

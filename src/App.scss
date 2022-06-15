@@ -1,19 +1,18 @@
-$beige: #fff8dc;
-$green: green;
+$background: #fff8dc;
+$fontcolor: green;
 
 .backgroundstyling {
-    color: $green;
-    background-color: $beige;
+    color: $fontcolor;
+    background-color: $background;
     padding: 10px;
     font-family: sans-serif;
 }
 
 h1 {
-    color: $green;
-    background-color: $beige;
+    color: $fontcolor;
+    background-color: $background;
 }
 
 .subcategory {
-    color: $green;
-    background-color: $beige;
+    color: $fontcolor;
 }
