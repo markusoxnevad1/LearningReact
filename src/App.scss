@@ -1,18 +1,26 @@
 $background: #fff8dc;
 $fontcolor: green;
+$linkColor: white;
 
 .backgroundstyling {
     color: $fontcolor;
     background-color: $background;
     padding: 10px;
-    font-family: sans-serif;
 }
 
 h1 {
     color: $fontcolor;
-    background-color: $background;
 }
 
 .subcategory {
     color: $fontcolor;
 }
+
+.navbar {
+    background-color: $background !important;
+}
+
+.nav-link {
+    color: $fontcolor !important;
+}
+

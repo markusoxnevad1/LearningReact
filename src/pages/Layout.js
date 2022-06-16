@@ -1,25 +1,19 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import '../App.scss';
 
 const Layout = () => {
     return (
         <>
-        <Navbar className="navbar navbar-expand-lg navbar-light bg-light" variant="dark">
-            <ul className="nav nav-tabs">
-                <li>
-                    <Nav.Link href="/">Home</Nav.Link>
-                </li>
-                <li>
-                    <Nav.Link href="/about">About</Nav.Link>
-                </li>
-                <li>
-                    <Nav.Link href="/learningreact">Learning React</Nav.Link>
-                </li>
-                <li>
-                    <Nav.Link href="/contact">Contact</Nav.Link>
-                </li>
-            </ul>
+        <Navbar className="navbar navbarstyling" variant="dark">
+            <div className="nav">
+                    <Nav.Link className="nav-link" href="/">Home</Nav.Link>
+                    <Nav.Link className="nav-link" href="/about">About</Nav.Link>
+                    <Nav.Link className="nav-link" href="/learningreact">Learning React</Nav.Link>
+                    <Nav.Link className="nav-link" href="/contact">Contact</Nav.Link>
+                    <Nav.Link className="nav-link" href="/highcharts">Highcharts</Nav.Link>
+            </div>
         </Navbar> 
 
         <Outlet />

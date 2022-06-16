@@ -4,7 +4,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Layout from './pages/Layout';
 import Contact from './pages/Contact';
-import Garage from './LearningReact';
+import LearningReact from './LearningReact';
+import Chart from './pages/Highcharts';
 
 function App() {
     return (
@@ -13,7 +14,8 @@ function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
-                    <Route path="learningreact" element={<Garage />} />
+                    <Route path="learningreact" element={<LearningReact />} />
+                    <Route path="highcharts" element={<Chart />} />
                     <Route path="contact" element={<Contact />} />
                 </Route>
             </Routes>

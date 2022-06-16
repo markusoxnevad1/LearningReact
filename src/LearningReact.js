@@ -1,8 +1,9 @@
 import React, { createContext, useCallback } from "react";
-import { useState, useEffect, useContext, useRef, useReducer } from "react";
+import { useState, useEffect, useContext, useRef, useReducer, useMemo } from "react";
 import Todos from './Todos';
 import './App.scss';
 import { ListGroup, Card } from 'react-bootstrap';
+import useFetch from "./useFetch";
 
 class Car extends React.Component {
     constructor(props) {
@@ -399,8 +400,62 @@ function UseReducerTodos() {
     )
 }
 
+const UseMemoHook = () => {
+    const [count, setCount] = useState(0);
+    const [todos, setTodos] = useState([]);
+    const calculation = useMemo(() => expensiveCalculation(count), [count]);
 
-class Garage extends React.Component {
+    const increment = () => {
+        setCount((c) => c + 1);
+    };
+    const addTodo = () => {
+        setTodos((t) => [...t, "New Todo"]);
+    };
+
+    return (
+        <div>
+            <div>
+                <h2>My Todos</h2>
+                {todos.map((todo, index) => {
+                    return <p key={index}>{todo}</p>;
+                })}
+                <button onClick={addTodo}>Add Todo</button>
+            </div>
+            <hr />
+            <div>
+                Count: {count}
+                <button onClick={increment}>+</button>
+                <h2>Expensive Calculation</h2>
+                {calculation}
+            </div>
+        </div>
+    );
+};
+
+const expensiveCalculation = (num) => {
+    console.log("Calculating...");
+    for (let i=0; i < 1000000000; i++) {
+        num +=1;
+    }
+    return num;
+};
+
+const Home = () => {
+    const [data] = useFetch("https://jsonplaceholder.typicode.com/todos");
+
+    return (
+        <>
+        {data &&
+            data.map((item) => {
+                return <p key={item.id}>{item.title}</p>;
+            })};
+        </>
+
+    );
+};
+
+
+class LearningReact extends React.Component {
     render() {
         return (
             <div>
@@ -464,6 +519,18 @@ class Garage extends React.Component {
                         <AppTodo />
                     </Card.Body>
                 </Card>
+                <Card>
+                    <Card.Header><h3>useMemo</h3></Card.Header>
+                    <Card.Body>
+                        <UseMemoHook />
+                    </Card.Body>
+                </Card>
+                <Card>
+                    <Card.Header><h3>Custom Hooks</h3></Card.Header>
+                    <Card.Body>
+                        <Home />
+                    </Card.Body>
+                </Card>
             </div>
 
         )
@@ -472,4 +539,4 @@ class Garage extends React.Component {
 
 
 
-export default Garage;
+export default LearningReact;
